@@ -67,6 +67,6 @@ export declare class CveId {
     /** given a cveId, returns the git hub repository partial path (directory and filename without extension) it should go into
      *  @param cveId string representing the CVE ID (e.g., CVE-1999-0001)
      *  @returns string representing the partial path the cve belongs in (e.g., /1999/1xxx/CVE-1999-0001)
-    */
+     */
     static toCvePath(cveId: string | CveId): string;
 }
