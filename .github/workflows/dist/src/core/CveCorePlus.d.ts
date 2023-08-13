@@ -1,7 +1,8 @@
 /**
  *  CveCorePlus extends CveCore by adding things that are useful
- *  for various purposes (e.g., activity logs, twitter):
- *      description from container.cna.description
+ *  for various purposes (e.g., activity logs, delta, twitter):
+ *  Currently, it adds:
+ *    - description from container.cna.description
  */
 import { CveId } from './CveId.js';
 import { CveCore } from './CveCore.js';

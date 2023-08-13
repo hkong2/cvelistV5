@@ -56808,12 +56808,13 @@ class UpdateCommand extends GenericCommand {
                 activityLog.prepend(activity);
                 activityLog.writeRecentFile();
                 // write delta file
-                const delta2 = await Delta.newDeltaFromGitHistory(options.baselineDate, null, process.env.CVES_BASE_DIRECTORY);
+                const delta2 = await Delta.newDeltaFromGitHistory(newOptions.start, null, process.env.CVES_BASE_DIRECTORY);
                 // console.log(`delta=${JSON.stringify(delta, null, 2)}`);
                 console.log(delta2.toText());
-                // delta2.writeFile();
+                delta2.writeFile();
                 delta2.writeCves();
                 delta2.writeTextFile('release_notes.md');
+                // git add/commit
                 const localDir = `${process.cwd()}/${process.env.CVES_BASE_DIRECTORY}`;
                 const git = new git_Git({ localDir: `${process.cwd()}` });
                 let ret; //: Response<string>
@@ -56878,7 +56879,7 @@ dotenv__WEBPACK_IMPORTED_MODULE_0__.config();
  *  The format follows semver for released software: Major.Minor.Patch, e.g., `1.0.0`
  *  However before release, it only uses the version number that it branched from, and appending it with `+feature_YYYY-MM-DD`, e.g., `1.0.1+twitter_2023-08-02`.
  */
-const version = `1.0.2+delta_2023-08-11`;
+const version = `1.0.2+delta_2023-08-12`;
 
 const program = new _commands_MainCommands_js__WEBPACK_IMPORTED_MODULE_1__/* .MainCommands */ .D(version);
 await program.run();
