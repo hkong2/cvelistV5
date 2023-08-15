@@ -43,6 +43,5 @@ export declare class CveCore {
     static fromRepositoryFilePath(path: string): CveCore;
     /** returns a CveCore object from a CveRecord */
     static fromCveRecord(cveRecord: CveRecord): CveCore;
-    toJson(whitespace?: number): string;
     getCvePath(): string;
 }

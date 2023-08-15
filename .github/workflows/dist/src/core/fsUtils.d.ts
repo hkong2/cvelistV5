@@ -16,6 +16,8 @@ export declare class FsUtils {
      */
     static rm(path: string): boolean;
     static ls(path: string): string[];
+    /** returns true iff the content of file at path 1 and the file at path 2 are exactly the same */
+    static isSameContent(path1: string, path2: string): boolean;
     /**
      * Synchronously generate a zip file from an array of files (no directories)
      * @param filepaths array of filenames to be zipped

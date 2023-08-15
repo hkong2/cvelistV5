@@ -15,7 +15,7 @@ export declare class CveId {
     /** internal representation of the CVE ID */
     id: string;
     /**
-     * @param id a string representing a CVE ID (e.g., CVE-1999-0001)
+     * @param id a CveId instance or a string representing a CVE ID (e.g., CVE-1999-0001)
      * @throws CveIdError if id is not a valid CVE ID
      */
     constructor(id: string | CveId);
@@ -33,6 +33,10 @@ export declare class CveId {
      * @returns the full CVE Path, e.g., /user/cve/cves/1999/0xxx/CVE-1999-0001
      */
     getFullCvePath(): string;
+    /**
+     * returns the official CVEProject/cvelistV5 URL to this CVE ID
+     */
+    getRawGithubUrl(): string;
     private static _years;
     /**
      * checks if a string is a valid CveID

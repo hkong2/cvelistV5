@@ -45010,7 +45010,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 3283:
+/***/ 1369:
 /***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
 
 
@@ -50904,12 +50904,16 @@ var esm_default = (/* unused pure expression or super */ null && (gitInstanceFac
 
 // EXTERNAL MODULE: ./node_modules/lodash/lodash.js
 var lodash = __nccwpck_require__(250);
+// EXTERNAL MODULE: ./node_modules/dotenv/lib/main.js
+var main = __nccwpck_require__(2437);
 ;// CONCATENATED MODULE: ./src/core/CveId.ts
 /**
  *  CveId is an object that represents a CVE ID and provides
  *  helper functions to use it
  */
 
+
+main.config();
 class CveIdError extends Error {
 }
 class CveId {
@@ -50917,7 +50921,7 @@ class CveId {
     id;
     // constructors and factories
     /**
-     * @param id a string representing a CVE ID (e.g., CVE-1999-0001)
+     * @param id a CveId instance or a string representing a CVE ID (e.g., CVE-1999-0001)
      * @throws CveIdError if id is not a valid CVE ID
      */
     constructor(id) {
@@ -50949,6 +50953,14 @@ class CveId {
      */
     getFullCvePath() {
         return `${external_process_default().cwd()}/${(external_process_default()).env.CVES_BASE_DIRECTORY}/${CveId.toCvePath(this.id)}`;
+    }
+    /**
+     * returns the official CVEProject/cvelistV5 URL to this CVE ID
+     */
+    getRawGithubUrl( /*official=true*/) {
+        // if ( official ) {
+        return `https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/${CveId.getCveDir(this.id)}/${this.id}.json`;
+        // }
     }
     // ----- static functions ----- ----- ----- -----
     // lazily initialized in getAllYears()
@@ -51116,11 +51128,337 @@ class CveCore {
     static fromCveRecord(cveRecord) {
         return this.fromCveMetadata(cveRecord.cveMetadata);
     }
-    toJson(whitespace = 2) {
-        return JSON.stringify(this, (k, v) => v ?? undefined, whitespace);
-    }
     getCvePath() {
         return this.cveId.getCvePath();
+    }
+}
+
+// EXTERNAL MODULE: ./node_modules/adm-zip/adm-zip.js
+var adm_zip = __nccwpck_require__(6761);
+var adm_zip_default = /*#__PURE__*/__nccwpck_require__.n(adm_zip);
+;// CONCATENATED MODULE: ./src/core/fsUtils.ts
+/** a wrapper/fascade class to make it easier to work with the file system SYNCRHONOUSLY */
+
+
+
+class FsUtils {
+    path;
+    // /** constructor
+    //  * @param path initializes a path
+    //  */
+    constructor(path) {
+        this.path = path;
+    }
+    /**
+     * synchronously returns whether the path exists
+     * (very thin wrapper for fs.existsSync which is NOT deprecated, unlike fs.exists)
+     * @param path the full or partial path to test
+     * @returns true iff the specified path exists
+     */
+    static exists(path) {
+        return external_fs_default().existsSync(path);
+    }
+    /**
+     * synchronously removes the specified file iff it exists
+     * @param path
+     * @returns true if the file was removed, false if it did not exist in the first place
+     */
+    static rm(path) {
+        if (FsUtils.exists(path)) {
+            external_fs_default().rmSync(path);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    static ls(path) {
+        const retval = [];
+        external_fs_default().readdirSync(path).forEach(file => {
+            // console.log(file);
+            retval.push(file);
+        });
+        return retval;
+    }
+    /** returns true iff the content of file at path 1 and the file at path 2 are exactly the same */
+    static isSameContent(path1, path2) {
+        if (!FsUtils.exists(path1) || !FsUtils.exists(path2)) {
+            return false;
+        }
+        const buf1 = external_fs_default().readFileSync(path1);
+        const buf2 = external_fs_default().readFileSync(path2);
+        return buf1.equals(buf2);
+    }
+    /**
+     * Synchronously generate a zip file from an array of files (no directories)
+     * @param filepaths array of filenames to be zipped
+     * @param resultFilepath filepath for resulting zip file
+     * @param zipVirtualDir dir name in zip, defaults to `files`
+     *                      (for example, if you want to add all the files
+     *                       into a zip folder called abc,
+     *                        you would pass 'abc' here)
+     * @param dir path to directory where files are located
+     */
+    static generateZipfile(filepaths, resultFilepath, zipVirtualDir = `files`, dir = '') {
+        console.log(`generating zip file from ${filepaths} to ${resultFilepath}`);
+        // if path to resultFilepath does not exist, recursively make them
+        const dirname = external_path_default().dirname(resultFilepath);
+        external_fs_default().mkdirSync(dirname, { recursive: true });
+        const zip = new (adm_zip_default());
+        if (!Array.isArray(filepaths)) {
+            filepaths = [filepaths];
+        }
+        filepaths.forEach(filepath => {
+            const path = (dir.length > 0) ? `${dir}/${filepath}` : filepath;
+            zip.addLocalFile(path, zipVirtualDir);
+        });
+        zip.writeZip(resultFilepath);
+        // console.log(`zip file generated at ${resultFilepath}`);
+    }
+}
+
+;// CONCATENATED MODULE: ./src/core/CveRecord.ts
+/**
+ * CVE Object that wraps various CVE-related operations into a single object, including
+ *  - read in a CVE Record JSON v5 format file
+ *  - auto-convert CVE Record JSON v5 format string to Cve5 object
+ *  - output as optionally prettyprinted JSON 5 string
+ *  - write to a file or to proper repository location
+ *
+ * @todo refactoring CVE IDs from string to CveId.  Currently, only using CveId class methods, but
+ *  the data member cveId is still just a string
+ */
+
+
+
+
+
+class CveRecord {
+    _defaultOutdir = process.env.CVE_UTILS_DEFAULT_OUTDIR;
+    cveId; // note we are still only using strings for CVE ID in CVE
+    containers;
+    cveMetadata;
+    dataType;
+    dataVersion;
+    sourceObj;
+    // ----- constructor and factory ----- ----- ----- ----- -----
+    /** reads in a proper CVE Record JSON v5 format obj (e.g., JSON.parse()'d content of a file or the response from the CVE API 2.1)
+     *  @param obj a Javascript object that conforms to the CVE Record JSON v5 format specification
+     *  @todo verify it is a CVE Record JSON v5 format format that we know how to work with
+     */
+    constructor(obj) {
+        this.sourceObj = obj;
+        this.cveId = obj['cveMetadata']?.cveId;
+        this.containers = obj['containers'];
+        this.cveMetadata = obj['cveMetadata'];
+        this.dataType = obj['dataType'];
+        this.dataVersion = obj['dataVersion'];
+    }
+    /** factory method that converts a CveId to a path in the
+     *  default `/cves` subdirectory, and synchronously reads in that CVE JSON 5.0 formatted file
+     *  and builds a CveRecord
+     *  @param cveId a string or CveId object
+     *  @param cves_directory (optional) relative or full path to where to find CVEs, if null, use .env spec
+     *    (e.g., `./test/fixtures/cve/5`)
+     *  @returns a CveRecord
+     */
+    static fromCveId(cve_id, cves_directory) {
+        console.log(`cve_id=${cve_id}`);
+        const cveId = new CveId(cve_id);
+        let path;
+        if (!cves_directory) {
+            path = `${cveId.getFullCvePath()}.json`;
+        }
+        else {
+            path = `${cves_directory}/${cveId.getCvePath()}.json`;
+        }
+        console.log(`path=${path}`);
+        return CveRecord.fromJsonFile(path);
+    }
+    /** factory method that synchronously reads in a CVE Record from a CVE JSON 5.0 formatted file
+     *  @param relFilepath relative or full path to the file
+     *  @returns a CveRecord
+     */
+    static fromJsonFile(relFilepath) {
+        if (FsUtils.exists(relFilepath)) {
+            const cveStr = external_fs_default().readFileSync(relFilepath, {
+                encoding: 'utf8',
+                flag: 'r',
+            });
+            const obj = JSON.parse(cveStr);
+            // console.log()
+            return new CveRecord(obj);
+        }
+        else {
+            console.log(`CveRecord.fromJsonFile(${relFilepath}) does not exist`);
+            return undefined;
+        }
+    }
+    /** returns the description from containers.cna.descriptions that has the language specified
+     * @param lang the ISO 639-1 lanugage code (defaults to 'en', which will also match 'en', 'En-US', 'en-uk', etc.)
+     * @returns the description, or undefined if it can't find the description in the specified language
+     */
+    getDescription(lang = 'en') {
+        const descriptions = this.containers?.cna?.descriptions;
+        if (descriptions && descriptions.length > 0) {
+            const en_descriptions = descriptions.filter((item) => item.lang.toLowerCase().startsWith(lang.toLowerCase()));
+            if (en_descriptions.length > 0) {
+                return en_descriptions[0].value;
+            }
+        }
+        return undefined;
+    }
+    /** returns the git hub repository partial path this CveRecord should go into
+     *  @returns string representing the partial path the cve belongs in (e.g., /1999/1xxx/CVE-1999-0001)
+     */
+    toCvePath() {
+        return CveId.toCvePath(this.cveId);
+    }
+    /** prints object in JSON format
+     *  @param prettyPrint boolean to set pretty printing (default is true)
+     *  @returns a JSON string
+     */
+    toJsonString(prettyPrint = true) {
+        if (prettyPrint) {
+            return JSON.stringify(this.sourceObj, null, 4);
+        }
+        else {
+            return JSON.stringify(this.sourceObj, null, 0);
+        }
+    }
+    /** writes a CVE Record to a file in CVE JSON 5.0 format
+     *  @param relFilepath relative path to the file
+     *  @param prettyprint boolean to set whether to pretty print the output
+     */
+    writeJsonFile(relFilepath, prettyprint = true) {
+        const value = this.toJsonString(prettyprint);
+        const dirname = external_path_default().dirname(relFilepath);
+        external_fs_default().mkdirSync(dirname, { recursive: true });
+        external_fs_default().writeFileSync(`${relFilepath}`, value);
+    }
+    /** writes a CVE Record to a file in CVE JSON 5.0 format
+     *  @param repositoryRoot path where the repository is (the full path will be determined by the CveID)
+     *  @param prettyprint boolean to set whether to pretty print the output
+     *  @returns the full path where the file was written to
+     */
+    writeToCvePath(repositoryRoot, prettyprint = true) {
+        const fullpath = `${repositoryRoot}/${this.toCvePath()}.json`;
+        this.writeJsonFile(fullpath, prettyprint);
+        return fullpath;
+    }
+}
+
+;// CONCATENATED MODULE: ./src/core/CveCorePlus.ts
+/**
+ *  CveCorePlus extends CveCore by adding things that are useful
+ *  for various purposes (e.g., activity logs, delta, twitter):
+ *  Currently, it adds:
+ *    - description from container.cna.description
+ *    - githubLink calculated based on GH_OWNER and GH_REPO currently running in
+ */
+
+
+
+
+
+
+
+main.config();
+class CveCorePlus extends CveCore {
+    description;
+    githubUrl;
+    /** optional field for storing timestamp when the update github action added
+     *  this to the repository
+     */
+    // timestampWhenCachedOnGithub?: IsoDateString; //@todo
+    // ----- constructors and factories ----- ----- ----- ----- -----
+    /**
+     * constructor which builds a minimum CveCore from a CveId or string
+     * @param cveId a CveId or string
+     */
+    constructor(cveId) {
+        super(cveId);
+    }
+    /** factory method that synchronously reads in a CVE Record from a CVE JSON 5.0 formatted file
+     *  @param relFilepath relative or full path to the file
+     *  @returns a CveCorePlus object or undefined if the JSON file cannot be read
+     */
+    static fromJsonFile(relFilepath) {
+        if (FsUtils.exists(relFilepath)) {
+            const cveStr = external_fs_default().readFileSync(relFilepath, {
+                encoding: 'utf8',
+                flag: 'r',
+            });
+            const obj = JSON.parse(cveStr);
+            const cp = CveCorePlus.fromCveMetadata(obj.cveMetadata);
+            console.log(`cveCorePlus = ${JSON.stringify(cp, null, 2)}`);
+            cp.updateFromLocalRepository();
+            cp.githubUrl = cp.cveId.getRawGithubUrl();
+            return cp;
+        }
+        else {
+            console.log(`Error:  ${relFilepath} does not exist`);
+            return undefined;
+        }
+    }
+    /**
+     * builds a full CveCorePlus using provided metadata
+     * @param metadata the CveMetadata in CVE JSON 5.0 schema
+     * @returns
+     */
+    static fromCveMetadata(metadata) {
+        // console.log(`metadata=${JSON.stringify(metadata, null, 2)}`)
+        const obj = new CveCorePlus(metadata?.cveId);
+        obj.set(metadata);
+        return obj;
+    }
+    /**
+     * builds a full CveCorePlus from a CveCore
+     * @param cveCore a CveCore object
+     * @returns a CveCorePlus object
+     */
+    static fromCveCore(cveCore) {
+        const obj = new CveCorePlus(cveCore?.cveId);
+        obj.state = cveCore?.state;
+        obj.assignerOrgId = cveCore?.assignerOrgId;
+        obj.assignerShortName = cveCore?.assignerShortName;
+        obj.dateReserved = cveCore?.dateReserved;
+        obj.datePublished = cveCore?.datePublished;
+        obj.dateUpdated = cveCore?.dateUpdated;
+        return obj;
+    }
+    /**
+     * builds a full CveCorePlus from a CveCore
+     * @param cveCore a CveCore object
+     * @returns a CveCorePlus object
+     */
+    static fromCveRecord(cve) {
+        const obj = new CveCorePlus(cve?.cveId);
+        obj.state = cve?.cveMetadata?.state;
+        obj.assignerOrgId = cve?.cveMetadata?.assignerOrgId;
+        obj.assignerShortName = cve?.cveMetadata?.assignerShortName;
+        obj.dateReserved = cve?.cveMetadata?.dateReserved;
+        obj.datePublished = cve?.cveMetadata?.datePublished;
+        obj.dateUpdated = cve?.cveMetadata?.dateUpdated;
+        obj.description = cve?.getDescription();
+        return obj;
+    }
+    // ----- accessors and mutators ----- ----- ----- -----
+    /**
+     * update CveCorePlus with additional data from the repository
+     * @returns true iff a JSON file was found and readable to fill in
+     * ALL the fields in the CveCorePlus data structure
+     */
+    updateFromLocalRepository() {
+        const filepath = `${this.cveId.getFullCvePath()}.json`;
+        console.log(`filepath=${filepath}`);
+        const cve = CveRecord.fromJsonFile(filepath);
+        if (cve) {
+            this.set(cve.cveMetadata);
+            this.description = cve.getDescription('en');
+            return true;
+        }
+        return false;
     }
 }
 
@@ -51256,13 +51594,13 @@ class git_Git {
                 if (CveId.isValidCveId(cveId)) {
                     switch (action) {
                         case 'A':
-                            delta.add(CveCore.fromRepositoryFilePath(path), DeltaQueue.kNew);
+                            delta.add(CveCorePlus.fromJsonFile(path), DeltaQueue.kNew);
                             break;
                         case 'M':
-                            delta.add(CveCore.fromRepositoryFilePath(path), DeltaQueue.kUpdated);
+                            delta.add(CveCorePlus.fromJsonFile(path), DeltaQueue.kUpdated);
                             break;
                         default:
-                            delta.add(CveCore.fromRepositoryFilePath(path), DeltaQueue.kUnknown);
+                            delta.add(CveCorePlus.fromJsonFile(path), DeltaQueue.kUnknown);
                             break;
                     }
                 }
@@ -51272,81 +51610,6 @@ class git_Git {
             });
         }
         return delta;
-    }
-}
-
-// EXTERNAL MODULE: ./node_modules/adm-zip/adm-zip.js
-var adm_zip = __nccwpck_require__(6761);
-var adm_zip_default = /*#__PURE__*/__nccwpck_require__.n(adm_zip);
-;// CONCATENATED MODULE: ./src/core/fsUtils.ts
-/** a wrapper/fascade class to make it easier to work with the file system SYNCRHONOUSLY */
-
-
-
-class FsUtils {
-    path;
-    // /** constructor
-    //  * @param path initializes a path
-    //  */
-    constructor(path) {
-        this.path = path;
-    }
-    /**
-     * synchronously returns whether the path exists
-     * (very thin wrapper for fs.existsSync which is NOT deprecated, unlike fs.exists)
-     * @param path the full or partial path to test
-     * @returns true iff the specified path exists
-     */
-    static exists(path) {
-        return external_fs_default().existsSync(path);
-    }
-    /**
-     * synchronously removes the specified file iff it exists
-     * @param path
-     * @returns true if the file was removed, false if it did not exist in the first place
-     */
-    static rm(path) {
-        if (FsUtils.exists(path)) {
-            external_fs_default().rmSync(path);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    static ls(path) {
-        const retval = [];
-        external_fs_default().readdirSync(path).forEach(file => {
-            // console.log(file);
-            retval.push(file);
-        });
-        return retval;
-    }
-    /**
-     * Synchronously generate a zip file from an array of files (no directories)
-     * @param filepaths array of filenames to be zipped
-     * @param resultFilepath filepath for resulting zip file
-     * @param zipVirtualDir dir name in zip, defaults to `files`
-     *                      (for example, if you want to add all the files
-     *                       into a zip folder called abc,
-     *                        you would pass 'abc' here)
-     * @param dir path to directory where files are located
-     */
-    static generateZipfile(filepaths, resultFilepath, zipVirtualDir = `files`, dir = '') {
-        console.log(`generating zip file from ${filepaths} to ${resultFilepath}`);
-        // if path to resultFilepath does not exist, recursively make them
-        const dirname = external_path_default().dirname(resultFilepath);
-        external_fs_default().mkdirSync(dirname, { recursive: true });
-        const zip = new (adm_zip_default());
-        if (!Array.isArray(filepaths)) {
-            filepaths = [filepaths];
-        }
-        filepaths.forEach(filepath => {
-            const path = (dir.length > 0) ? `${dir}/${filepath}` : filepath;
-            zip.addLocalFile(path, zipVirtualDir);
-        });
-        zip.writeZip(resultFilepath);
-        // console.log(`zip file generated at ${resultFilepath}`);
     }
 }
 
@@ -51380,11 +51643,13 @@ var DeltaQueue;
     DeltaQueue[DeltaQueue["kUnknown"] = 4] = "kUnknown";
 })(DeltaQueue = DeltaQueue || (DeltaQueue = {}));
 class Delta /*implements DeltaProps*/ {
+    fetchTime;
+    durationInMsecs;
     numberOfChanges = 0;
-    // published: CveCore[] = [];
     new = [];
     updated = [];
     unknown = [];
+    // ----- constructor and factory functions ----- ----- 
     /** constructor
      *  @param prevDelta a previous delta to intialize this object, essentially appending new
      *                   deltas to the privous ones (default is none)
@@ -51392,13 +51657,15 @@ class Delta /*implements DeltaProps*/ {
     constructor(prevDelta = null) {
         // update with previous delta, if any
         if (prevDelta) {
+            this.fetchTime = prevDelta?.fetchTime;
+            this.durationInMsecs = prevDelta?.durationInMsecs;
             this.numberOfChanges = prevDelta?.numberOfChanges ?? 0;
             this.new = prevDelta?.new ? (0,lodash.cloneDeep)(prevDelta.new) : [];
             // this.published = prevDelta?.published ? cloneDeep(prevDelta.published) : [];
             this.updated = prevDelta?.updated ? (0,lodash.cloneDeep)(prevDelta.updated) : [];
+            this.unknown = prevDelta?.unknown ? (0,lodash.cloneDeep)(prevDelta.unknown) : [];
         }
     }
-    // ----- factory functions ----- ----- 
     /**
      * Factory that generates a new Delta from git log based on a time window
      * @param start git log start time window
@@ -51449,13 +51716,13 @@ class Delta /*implements DeltaProps*/ {
         notAddedList.forEach(item => {
             const cveId = Delta.getCveIdMetaData(item)[0];
             if (cveId) {
-                delta.add(new CveCore(cveId), DeltaQueue.kNew);
+                delta.add(new CveCorePlus(cveId), DeltaQueue.kNew);
             }
         });
         modifiedList.forEach(item => {
             const cveId = Delta.getCveIdMetaData(item)[0];
             if (cveId) {
-                delta.add(new CveCore(cveId), DeltaQueue.kUpdated);
+                delta.add(new CveCorePlus(cveId), DeltaQueue.kUpdated);
             }
         });
         // console.log(`delta = ${JSON.stringify(delta, null, 2)}`);
@@ -51483,6 +51750,7 @@ class Delta /*implements DeltaProps*/ {
             return [newQueue, 0];
         }
     }
+    // ----- member functions ----- -----
     /** calculates the numberOfChanges property
      * @returns the total number of deltas in all the queues
      */
@@ -51543,7 +51811,7 @@ class Delta /*implements DeltaProps*/ {
     `;
         return retstr;
     }
-    // ----- ----- Output to files
+    // ----- I/O ----- -----
     /** writes the delta to a JSON file
      *  @param relFilepath relative path from current directory
     */
@@ -51608,7 +51876,7 @@ class DeltaCommand extends GenericCommand {
         this._program
             .command(name)
             .description('cve deltas (cve file changes)')
-            .option('--after <ISO timestamp>', 'show CVEs changed since <timestamp>, defaults to UTC midnight of today', `${CveDate.getMidnight().toISOString()}`)
+            .option('--start <ISO timestamp>', 'show CVEs changed starting from <ISO timestamp>, defaults to UTC midnight of today', `${CveDate.getMidnight().toISOString()}`)
             .option(`--yesterday-all`, 'do a delta of all of the CVEs changed yesterday')
             // .option('--repository <path>', 'set repository, defaults to env var CVES_BASE_DIRECTORY', process.env.CVES_BASE_DIRECTORY)
             .action(this.run);
@@ -51629,7 +51897,7 @@ class DeltaCommand extends GenericCommand {
         }
         else {
             const timestamp = new Date();
-            const delta = await Delta.newDeltaFromGitHistory(options.after);
+            const delta = await Delta.newDeltaFromGitHistory(options.start);
             // console.log(`delta=${JSON.stringify(delta, null, 2)}`);
             console.log(delta.toText());
             const date = format_default()(timestamp, 'yyyy-MM-dd');
@@ -56295,137 +56563,6 @@ class ApiBaseService {
     }
 }
 
-;// CONCATENATED MODULE: ./src/core/CveRecord.ts
-/**
- * CVE Object that wraps various CVE-related operations into a single object, including
- *  - read in a CVE Record JSON v5 format file
- *  - auto-convert CVE Record JSON v5 format string to Cve5 object
- *  - output as optionally prettyprinted JSON 5 string
- *  - write to a file or to proper repository location
- *
- * @todo refactoring CVE IDs from string to CveId.  Currently, only using CveId class methods, but
- *  the data member cveId is still just a string
- */
-
-
-
-
-
-class CveRecord {
-    _defaultOutdir = process.env.CVE_UTILS_DEFAULT_OUTDIR;
-    cveId; // note we are still only using strings for CVE ID in CVE
-    containers;
-    cveMetadata;
-    dataType;
-    dataVersion;
-    sourceObj;
-    // ----- constructor and factory ----- ----- ----- ----- -----
-    /** reads in a proper CVE Record JSON v5 format obj (e.g., JSON.parse()'d content of a file or the response from the CVE API 2.1)
-     *  @param obj a Javascript object that conforms to the CVE Record JSON v5 format specification
-     *  @todo verify it is a CVE Record JSON v5 format format that we know how to work with
-     */
-    constructor(obj) {
-        this.sourceObj = obj;
-        this.cveId = obj['cveMetadata']?.cveId;
-        this.containers = obj['containers'];
-        this.cveMetadata = obj['cveMetadata'];
-        this.dataType = obj['dataType'];
-        this.dataVersion = obj['dataVersion'];
-    }
-    /** factory method that converts a CveId to a path in the
-     *  default `/cves` subdirectory, and synchronously reads in that CVE JSON 5.0 formatted file
-     *  and builds a CveRecord
-     *  @param cveId a string or CveId object
-     *  @param cves_directory (optional) relative or full path to where to find CVEs, if null, use .env spec
-     *    (e.g., `./test/fixtures/cve/5`)
-     *  @returns a CveRecord
-     */
-    static fromCveId(cve_id, cves_directory) {
-        console.log(`cve_id=${cve_id}`);
-        const cveId = new CveId(cve_id);
-        let path;
-        if (!cves_directory) {
-            path = `${cveId.getFullCvePath()}.json`;
-        }
-        else {
-            path = `${cves_directory}/${cveId.getCvePath()}.json`;
-        }
-        console.log(`path=${path}`);
-        return CveRecord.fromJsonFile(path);
-    }
-    /** factory method that synchronously reads in a CVE Record from a CVE JSON 5.0 formatted file
-     *  @param relFilepath relative or full path to the file
-     *  @returns a CveRecord
-     */
-    static fromJsonFile(relFilepath) {
-        if (FsUtils.exists(relFilepath)) {
-            const cveStr = external_fs_default().readFileSync(relFilepath, {
-                encoding: 'utf8',
-                flag: 'r',
-            });
-            const obj = JSON.parse(cveStr);
-            // console.log()
-            return new CveRecord(obj);
-        }
-        else {
-            console.log(`CveRecord.fromJsonFile(${relFilepath}) does not exist`);
-            return undefined;
-        }
-    }
-    /** returns the description from containers.cna.descriptions that has the language specified
-     * @param lang the ISO 639-1 lanugage code (defaults to 'en', which will also match 'en', 'En-US', 'en-uk', etc.)
-     * @returns the description, or undefined if it can't find the description in the specified language
-     */
-    getDescription(lang = 'en') {
-        const descriptions = this.containers?.cna?.descriptions;
-        if (descriptions && descriptions.length > 0) {
-            const en_descriptions = descriptions.filter((item) => item.lang.toLowerCase().startsWith(lang.toLowerCase()));
-            if (en_descriptions.length > 0) {
-                return en_descriptions[0].value;
-            }
-        }
-        return undefined;
-    }
-    /** returns the git hub repository partial path this CveRecord should go into
-     *  @returns string representing the partial path the cve belongs in (e.g., /1999/1xxx/CVE-1999-0001)
-     */
-    toCvePath() {
-        return CveId.toCvePath(this.cveId);
-    }
-    /** prints object in JSON format
-     *  @param prettyPrint boolean to set pretty printing (default is true)
-     *  @returns a JSON string
-     */
-    toJsonString(prettyPrint = true) {
-        if (prettyPrint) {
-            return JSON.stringify(this.sourceObj, null, 4);
-        }
-        else {
-            return JSON.stringify(this.sourceObj, null, 0);
-        }
-    }
-    /** writes a CVE Record to a file in CVE JSON 5.0 format
-     *  @param relFilepath relative path to the file
-     *  @param prettyprint boolean to set whether to pretty print the output
-     */
-    writeJsonFile(relFilepath, prettyprint = true) {
-        const value = this.toJsonString(prettyprint);
-        const dirname = external_path_default().dirname(relFilepath);
-        external_fs_default().mkdirSync(dirname, { recursive: true });
-        external_fs_default().writeFileSync(`${relFilepath}`, value);
-    }
-    /** writes a CVE Record to a file in CVE JSON 5.0 format
-     *  @param repositoryRoot path where the repository is (the full path will be determined by the CveID)
-     *  @param prettyprint boolean to set whether to pretty print the output
-     *  @returns the full path where the file was written to
-     */
-    writeToCvePath(repositoryRoot, prettyprint = true) {
-        const fullpath = `${repositoryRoot}/${this.toCvePath()}.json`;
-        this.writeJsonFile(fullpath, prettyprint);
-        return fullpath;
-    }
-}
-
 ;// CONCATENATED MODULE: ./src/net/CveService.ts
 
 
@@ -56732,7 +56869,111 @@ class CveUpdater {
     }
 }
 
+;// CONCATENATED MODULE: ./src/core/DeltaLog.ts
+/**
+ *  DeltaLog - log of current and recent historical deltas
+ *  Intent is to log all deltas from the current delta to recent historical deltas,
+ *  so key information is stored, and other systems using deltas as polling integration points
+ *  can poll at almost arbitrary frequency
+ *
+ *  The deltas in the DeltaLog is intended to provide most of the useful information
+ *  about a CVE, so that
+ *    1. the data can be used as a filter
+ *    2. minimize REST calls to CVE REST Services
+ */
+
+
+
+// export interface DeltaLogOptions {
+//   path?: string,
+//   filename?: string,
+//   // mode?: "prepend" | "append";
+//   logCurrentActivity?: boolean;
+//   logAlways?: boolean;
+//   logKeepPrevious?: boolean;
+// }
+class DeltaLog extends Array {
+    static kDeltaLogFilename = `deltaLog.json`;
+    static kDeltaLogFile = `./cves/${DeltaLog.kDeltaLogFilename}`;
+    // _options: DeltaLogOptions;
+    // _fullpath: string =
+    // _deltas: Delta[] = [];
+    // ----- constructor and factory functions ----- ----- ----- ----- ----- ----- ----- ----- ----- 
+    constructor( /* options: DeltaLogOptions */) {
+        super();
+        // this._options = options;
+        // this._options.path = options.path || `.`;
+        // this._options.filename = options.filename || `./test/activities_recent.json`;
+        // // this._options.mode = options.mode || `prepend`;
+        // this._options.logAlways = options.logAlways || false;
+        // this._options.logKeepPrevious = options.logKeepPrevious || false;
+        // this._fullpath = `${this._options.path}/${this._options.filename}`;
+        // console.log(`DeltaLog constructor:  options=${JSON.stringify(this)}`)
+        // console.log(`options=`, this._options);
+        // if (this._options.logKeepPrevious) {
+        // this._deltas = DeltaLog.readFile(this._fullpath);
+        // }
+        // else {
+        //   // fs.unlinkSync(this._fullpath);
+        //   this.clearActivities();
+        // }
+    }
+    /** constructs a DeltaLog by reading in the deltaLog file */
+    static fromLogFile(relFilepath) {
+        if (!relFilepath) {
+            relFilepath = DeltaLog.kDeltaLogFilename;
+        }
+        let json = [];
+        if (external_fs_default().existsSync(relFilepath)) {
+            const str = external_fs_default().readFileSync(relFilepath, { encoding: 'utf8', flag: 'r' });
+            if (str.length > 0) {
+                json = JSON.parse(str);
+            }
+        }
+        let log = new DeltaLog();
+        json.forEach(ele => {
+            log.push(new Delta(ele));
+        });
+        return log;
+    }
+    // ----- class functions ----- ----- ----- ----- ----- ----- ----- ----- ----- 
+    /**
+     * prepends a delta to log
+     * @param delta the Delta object to prepend
+     */
+    prepend(delta) {
+        this.unshift(delta);
+    }
+    /** sorts the Deltas in place by date
+     *  @param direction: "latestFirst" | "latestLast"
+    */
+    sortByFetchTme(direction) {
+        return this.sort((a, b) => {
+            const d1 = a.fetchTime ? new Date(a.fetchTime) : new Date();
+            const d2 = b.fetchTime ? new Date(b.fetchTime) : new Date();
+            if (direction === 'latestFirst') {
+                return d2.getTime() - d1.getTime();
+            }
+            else {
+                return d1.getTime() - d2.getTime();
+            }
+        });
+    }
+    // ----- IO ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+    /** writes deltas to a file
+      */
+    writeFile(relFilepath) {
+        if (!relFilepath) {
+            relFilepath = DeltaLog.kDeltaLogFile;
+        }
+        const dirname = external_path_default().dirname(relFilepath);
+        external_fs_default().mkdirSync(dirname, { recursive: true });
+        external_fs_default().writeFileSync(`${relFilepath}`, JSON.stringify(this, null, 2));
+    }
+}
+
 ;// CONCATENATED MODULE: ./src/commands/UpdateCommand.ts
+
 
 
 
@@ -56814,6 +57055,13 @@ class UpdateCommand extends GenericCommand {
                 delta2.writeFile();
                 delta2.writeCves();
                 delta2.writeTextFile('release_notes.md');
+                // write deltaLog
+                const deltaLog = DeltaLog.fromLogFile();
+                let currentDelta = new Delta(activity.delta);
+                currentDelta.fetchTime = activity.startTime;
+                currentDelta.durationInMsecs = parseInt(activity.duration.split(' ')[0]);
+                deltaLog.prepend(currentDelta);
+                deltaLog.writeFile();
                 // git add/commit
                 const localDir = `${process.cwd()}/${process.env.CVES_BASE_DIRECTORY}`;
                 const git = new git_Git({ localDir: `${process.cwd()}` });
@@ -56864,7 +57112,7 @@ class MainCommands {
 __nccwpck_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 /* harmony import */ var dotenv__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(2437);
 /* harmony import */ var dotenv__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(dotenv__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _commands_MainCommands_js__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(3283);
+/* harmony import */ var _commands_MainCommands_js__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(1369);
 // set up environment
 
 dotenv__WEBPACK_IMPORTED_MODULE_0__.config();
@@ -56879,7 +57127,7 @@ dotenv__WEBPACK_IMPORTED_MODULE_0__.config();
  *  The format follows semver for released software: Major.Minor.Patch, e.g., `1.0.0`
  *  However before release, it only uses the version number that it branched from, and appending it with `+feature_YYYY-MM-DD`, e.g., `1.0.1+twitter_2023-08-02`.
  */
-const version = `1.0.2+delta_2023-08-12`;
+const version = `1.0.2+delta_2023-08-14`;
 
 const program = new _commands_MainCommands_js__WEBPACK_IMPORTED_MODULE_1__/* .MainCommands */ .D(version);
 await program.run();

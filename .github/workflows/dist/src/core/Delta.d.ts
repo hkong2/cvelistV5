@@ -10,7 +10,7 @@
  *  When making zip files, this class copies CVE JSON files from /cves to a directory, and zip that, so the /cves directory
  *  needs to be in the current directory
  */
-import { CveCore } from './CveCore.js';
+import { CveCorePlus } from './CveCorePlus.js';
 export declare type IsoDate = string;
 export declare enum DeltaQueue {
     kNew = 1,
@@ -19,10 +19,12 @@ export declare enum DeltaQueue {
     kUnknown = 4
 }
 export declare class Delta {
+    fetchTime?: string;
+    durationInMsecs?: number;
     numberOfChanges: number;
-    new: CveCore[];
-    updated: CveCore[];
-    unknown: CveCore[];
+    new: CveCorePlus[];
+    updated: CveCorePlus[];
+    unknown?: CveCorePlus[];
     /** constructor
      *  @param prevDelta a previous delta to intialize this object, essentially appending new
      *                   deltas to the privous ones (default is none)
@@ -64,7 +66,7 @@ export declare class Delta {
      *  @param cve a CveCore object to be added
      *  @param queue the DeltaQueue enum specifying which queue to add to
      */
-    add(cve: CveCore, queue: DeltaQueue): void;
+    add(cve: CveCorePlus, queue: DeltaQueue): void;
     /** summarize the information in this Delta object in human-readable form */
     toText(): string;
     /** writes the delta to a JSON file

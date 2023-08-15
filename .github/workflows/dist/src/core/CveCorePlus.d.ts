@@ -3,6 +3,7 @@
  *  for various purposes (e.g., activity logs, delta, twitter):
  *  Currently, it adds:
  *    - description from container.cna.description
+ *    - githubLink calculated based on GH_OWNER and GH_REPO currently running in
  */
 import { CveId } from './CveId.js';
 import { CveCore } from './CveCore.js';
@@ -12,6 +13,7 @@ export { CveId } from './CveId.js';
 export { CveCore } from './CveCore.js';
 export declare class CveCorePlus extends CveCore {
     description?: string;
+    githubUrl?: string;
     /** optional field for storing timestamp when the update github action added
      *  this to the repository
      */
@@ -20,6 +22,11 @@ export declare class CveCorePlus extends CveCore {
      * @param cveId a CveId or string
      */
     constructor(cveId: string | CveId);
+    /** factory method that synchronously reads in a CVE Record from a CVE JSON 5.0 formatted file
+     *  @param relFilepath relative or full path to the file
+     *  @returns a CveCorePlus object or undefined if the JSON file cannot be read
+     */
+    static fromJsonFile(relFilepath: string): CveCorePlus | undefined;
     /**
      * builds a full CveCorePlus using provided metadata
      * @param metadata the CveMetadata in CVE JSON 5.0 schema
