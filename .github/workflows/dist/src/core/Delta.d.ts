@@ -18,6 +18,26 @@ export declare enum DeltaQueue {
     kUpdated = 3,
     kUnknown = 4
 }
+/**
+ * Output JSON format for delta.json and deltaLog.json based on feedback
+ * from the AWG on 8/22/2023 to keep the output simple
+ *
+ * So internally, we are storing the full CveCorePlus, but externally,
+ * and specifically when writing out to JSON, we are using this shortened format
+ */
+export declare class DeltaOutpuItem {
+    cveId: string;
+    cveOrgLink?: string;
+    githubLink?: string;
+    dateUpdated?: string;
+    static fromCveCorePlus(cvep: CveCorePlus): DeltaOutpuItem;
+    toJSON(): {
+        cveId: string;
+        cveOrgLink: string;
+        githubLink: string;
+        dateUpdated: string;
+    };
+}
 export declare class Delta {
     fetchTime?: string;
     durationInMsecs?: number;
@@ -26,7 +46,7 @@ export declare class Delta {
     updated: CveCorePlus[];
     unknown?: CveCorePlus[];
     /** constructor
-     *  @param prevDelta a previous delta to intialize this object, essentially appending new
+     *  @param prevDelta a previous delta to intialize this object, essentially prepending new
      *                   deltas to the privous ones (default is none)
      */
     constructor(prevDelta?: Partial<Delta>);
