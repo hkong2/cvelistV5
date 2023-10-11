@@ -1,9 +1,13 @@
 [
   {
-    "fetchTime": "2023-10-11T16:07:33.788Z",
-    "durationInMsecs": 2611,
+    "fetchTime": "2023-10-11T17:00:50.917Z",
+    "durationInMsecs": 2390,
     "numberOfChanges": 20,
-    "new": [],
+    "new": [
+      {
+        "cveId": "CVE-2023-4936"
+      }
+    ],
     "updated": [
       {
         "cveId": "CVE-2023-24479"
@@ -61,9 +65,6 @@
       },
       {
         "cveId": "CVE-2023-35968"
-      },
-      {
-        "cveId": "CVE-2023-43641"
       }
     ],
     "unknown": []
