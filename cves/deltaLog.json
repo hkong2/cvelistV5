@@ -1,14 +1,24 @@
 [
   {
-    "fetchTime": "2023-10-12T21:09:03.792Z",
-    "durationInMsecs": 2770,
-    "numberOfChanges": 1,
+    "fetchTime": "2023-10-12T22:17:42.830Z",
+    "durationInMsecs": 2903,
+    "numberOfChanges": 4,
     "new": [
+      {
+        "cveId": "CVE-2023-41261"
+      },
+      {
+        "cveId": "CVE-2023-41262"
+      },
+      {
+        "cveId": "CVE-2023-41263"
+      }
+    ],
+    "updated": [
       {
         "cveId": "CVE-2023-27316"
       }
     ],
-    "updated": [],
     "unknown": []
   }
 ]
