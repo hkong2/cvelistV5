@@ -1,26 +1,24 @@
 [
   {
-    "fetchTime": "2023-11-14T22:18:38.407Z",
-    "durationInMsecs": 2683,
-    "numberOfChanges": 5,
+    "fetchTime": "2023-11-14T22:30:32.239Z",
+    "durationInMsecs": 2754,
+    "numberOfChanges": 4,
     "new": [
+      {
+        "cveId": "CVE-2023-39203"
+      },
+      {
+        "cveId": "CVE-2023-39204"
+      }
+    ],
+    "updated": [
       {
         "cveId": "CVE-2023-39202"
       },
       {
-        "cveId": "CVE-2023-41570"
-      },
-      {
-        "cveId": "CVE-2023-46582"
-      },
-      {
-        "cveId": "CVE-2023-47517"
-      },
-      {
-        "cveId": "CVE-2023-47518"
+        "cveId": "CVE-2023-3889"
       }
     ],
-    "updated": [],
     "unknown": []
   }
 ]
