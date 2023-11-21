@@ -1,14 +1,24 @@
 [
   {
-    "fetchTime": "2023-11-21T17:41:35.237Z",
-    "durationInMsecs": 2056,
-    "numberOfChanges": 1,
+    "fetchTime": "2023-11-21T17:51:19.506Z",
+    "durationInMsecs": 2751,
+    "numberOfChanges": 4,
     "new": [
       {
-        "cveId": "CVE-2021-27502"
+        "cveId": "CVE-2021-27504"
       }
     ],
-    "updated": [],
+    "updated": [
+      {
+        "cveId": "CVE-2023-45161"
+      },
+      {
+        "cveId": "CVE-2023-45163"
+      },
+      {
+        "cveId": "CVE-2023-5964"
+      }
+    ],
     "unknown": []
   }
 ]
