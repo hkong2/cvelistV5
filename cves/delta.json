@@ -1,14 +1,20 @@
 {
-  "fetchTime": "2023-12-25T05:27:49.681Z",
-  "durationInMsecs": 2976,
-  "numberOfChanges": 1,
+  "fetchTime": "2023-12-25T05:37:41.944Z",
+  "durationInMsecs": 2061,
+  "numberOfChanges": 2,
   "new": [
+    {
+      "cveId": "CVE-2023-51772",
+      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2023-51772",
+      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2023/51xxx/CVE-2023-51772.json"
+    }
+  ],
+  "updated": [
     {
       "cveId": "CVE-2023-48654",
       "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2023-48654",
       "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2023/48xxx/CVE-2023-48654.json"
     }
   ],
-  "updated": [],
   "unknown": []
 }
