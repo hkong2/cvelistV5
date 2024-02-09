@@ -1,14 +1,27 @@
 [
   {
-    "fetchTime": "2024-02-09T22:40:34.694Z",
-    "durationInMsecs": 2449,
-    "numberOfChanges": 1,
+    "fetchTime": "2024-02-09T22:50:06.295Z",
+    "durationInMsecs": 2826,
+    "numberOfChanges": 5,
     "new": [
       {
-        "cveId": "CVE-2024-1404"
+        "cveId": "CVE-2024-23324"
+      },
+      {
+        "cveId": "CVE-2024-23325"
+      },
+      {
+        "cveId": "CVE-2024-23327"
       }
     ],
-    "updated": [],
+    "updated": [
+      {
+        "cveId": "CVE-2023-4255"
+      },
+      {
+        "cveId": "CVE-2023-4256"
+      }
+    ],
     "unknown": []
   }
 ]
