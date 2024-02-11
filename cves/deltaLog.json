@@ -1,14 +1,21 @@
 [
   {
-    "fetchTime": "2024-02-11T03:13:08.292Z",
-    "durationInMsecs": 2624,
-    "numberOfChanges": 1,
+    "fetchTime": "2024-02-11T04:13:42.778Z",
+    "durationInMsecs": 2670,
+    "numberOfChanges": 3,
     "new": [
       {
-        "cveId": "CVE-2024-1432"
+        "cveId": "CVE-2023-52427"
       }
     ],
-    "updated": [],
+    "updated": [
+      {
+        "cveId": "CVE-2023-4255"
+      },
+      {
+        "cveId": "CVE-2023-4256"
+      }
+    ],
     "unknown": []
   }
 ]
