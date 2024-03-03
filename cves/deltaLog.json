@@ -1,18 +1,19 @@
 [
   {
-    "fetchTime": "2024-03-03T02:25:18.773Z",
-    "durationInMsecs": 3169,
+    "fetchTime": "2024-03-03T03:11:44.170Z",
+    "durationInMsecs": 3033,
     "numberOfChanges": 3,
-    "new": [],
+    "new": [
+      {
+        "cveId": "CVE-2024-25016"
+      },
+      {
+        "cveId": "CVE-2024-2135"
+      }
+    ],
     "updated": [
       {
-        "cveId": "CVE-2021-31152"
-      },
-      {
-        "cveId": "CVE-2024-1938"
-      },
-      {
-        "cveId": "CVE-2024-1939"
+        "cveId": "CVE-2023-49114"
       }
     ],
     "unknown": []
