@@ -1,34 +1,30 @@
 {
-  "fetchTime": "2024-04-17T13:31:17.518Z",
-  "durationInMsecs": 2696,
-  "numberOfChanges": 5,
+  "fetchTime": "2024-04-17T13:50:28.288Z",
+  "durationInMsecs": 2661,
+  "numberOfChanges": 4,
   "new": [
+    {
+      "cveId": "CVE-2024-31578",
+      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-31578",
+      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/31xxx/CVE-2024-31578.json"
+    },
+    {
+      "cveId": "CVE-2024-32293",
+      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-32293",
+      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/32xxx/CVE-2024-32293.json"
+    }
+  ],
+  "updated": [
+    {
+      "cveId": "CVE-2024-1132",
+      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-1132",
+      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/1xxx/CVE-2024-1132.json"
+    },
     {
       "cveId": "CVE-2024-1249",
       "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-1249",
       "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/1xxx/CVE-2024-1249.json"
-    },
-    {
-      "cveId": "CVE-2024-2419",
-      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-2419",
-      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/2xxx/CVE-2024-2419.json"
-    },
-    {
-      "cveId": "CVE-2024-32283",
-      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-32283",
-      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/32xxx/CVE-2024-32283.json"
-    },
-    {
-      "cveId": "CVE-2024-32306",
-      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-32306",
-      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/32xxx/CVE-2024-32306.json"
-    },
-    {
-      "cveId": "CVE-2024-32311",
-      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-32311",
-      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/32xxx/CVE-2024-32311.json"
     }
   ],
-  "updated": [],
   "unknown": []
 }
