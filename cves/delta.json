@@ -1,28 +1,34 @@
 {
-  "fetchTime": "2024-06-10T15:29:26.015Z",
-  "durationInMsecs": 2097,
-  "numberOfChanges": 4,
-  "new": [],
+  "fetchTime": "2024-06-10T15:39:13.657Z",
+  "durationInMsecs": 3082,
+  "numberOfChanges": 5,
+  "new": [
+    {
+      "cveId": "CVE-2024-26507",
+      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-26507",
+      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/26xxx/CVE-2024-26507.json"
+    },
+    {
+      "cveId": "CVE-2024-34761",
+      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-34761",
+      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/34xxx/CVE-2024-34761.json"
+    },
+    {
+      "cveId": "CVE-2024-34762",
+      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-34762",
+      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/34xxx/CVE-2024-34762.json"
+    }
+  ],
   "updated": [
     {
-      "cveId": "CVE-2023-31080",
-      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2023-31080",
-      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2023/31xxx/CVE-2023-31080.json"
+      "cveId": "CVE-2024-31274",
+      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-31274",
+      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/31xxx/CVE-2024-31274.json"
     },
     {
-      "cveId": "CVE-2024-32811",
-      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-32811",
-      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/32xxx/CVE-2024-32811.json"
-    },
-    {
-      "cveId": "CVE-2024-33564",
-      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-33564",
-      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/33xxx/CVE-2024-33564.json"
-    },
-    {
-      "cveId": "CVE-2024-5613",
-      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-5613",
-      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/5xxx/CVE-2024-5613.json"
+      "cveId": "CVE-2024-35684",
+      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2024-35684",
+      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2024/35xxx/CVE-2024-35684.json"
     }
   ],
   "unknown": []
