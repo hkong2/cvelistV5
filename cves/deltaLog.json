@@ -1,243 +1,96 @@
 [
   {
-    "fetchTime": "2024-09-25T19:45:07.927Z",
-    "durationInMsecs": 6515,
-    "numberOfChanges": 78,
+    "fetchTime": "2024-09-25T19:54:59.958Z",
+    "durationInMsecs": 6472,
+    "numberOfChanges": 29,
     "new": [],
     "updated": [
       {
-        "cveId": "CVE-2021-2137"
+        "cveId": "CVE-2021-2415"
       },
       {
-        "cveId": "CVE-2021-2332"
+        "cveId": "CVE-2021-2417"
       },
       {
-        "cveId": "CVE-2021-2414"
+        "cveId": "CVE-2021-2418"
       },
       {
-        "cveId": "CVE-2021-2416"
+        "cveId": "CVE-2021-2419"
       },
       {
-        "cveId": "CVE-2021-2430"
+        "cveId": "CVE-2021-2420"
       },
       {
-        "cveId": "CVE-2021-2431"
+        "cveId": "CVE-2021-2421"
       },
       {
-        "cveId": "CVE-2021-2432"
+        "cveId": "CVE-2021-2422"
       },
       {
-        "cveId": "CVE-2021-2433"
+        "cveId": "CVE-2021-2423"
       },
       {
-        "cveId": "CVE-2021-2434"
+        "cveId": "CVE-2021-2424"
       },
       {
-        "cveId": "CVE-2021-2435"
+        "cveId": "CVE-2021-2425"
       },
       {
-        "cveId": "CVE-2021-2436"
+        "cveId": "CVE-2021-2426"
       },
       {
-        "cveId": "CVE-2021-2437"
+        "cveId": "CVE-2021-2427"
       },
       {
-        "cveId": "CVE-2021-2438"
+        "cveId": "CVE-2021-2428"
       },
       {
-        "cveId": "CVE-2021-2439"
+        "cveId": "CVE-2021-2429"
       },
       {
-        "cveId": "CVE-2021-2440"
+        "cveId": "CVE-2022-1415"
       },
       {
-        "cveId": "CVE-2021-2441"
+        "cveId": "CVE-2023-36250"
       },
       {
-        "cveId": "CVE-2021-2442"
+        "cveId": "CVE-2023-39641"
       },
       {
-        "cveId": "CVE-2021-2443"
+        "cveId": "CVE-2023-39642"
       },
       {
-        "cveId": "CVE-2021-2444"
+        "cveId": "CVE-2023-40779"
       },
       {
-        "cveId": "CVE-2021-2445"
+        "cveId": "CVE-2023-40868"
       },
       {
-        "cveId": "CVE-2021-2446"
+        "cveId": "CVE-2023-40869"
       },
       {
-        "cveId": "CVE-2021-2447"
+        "cveId": "CVE-2023-40955"
       },
       {
-        "cveId": "CVE-2021-2448"
+        "cveId": "CVE-2023-40956"
       },
       {
-        "cveId": "CVE-2021-2449"
+        "cveId": "CVE-2023-41331"
       },
       {
-        "cveId": "CVE-2021-2450"
+        "cveId": "CVE-2023-4918"
       },
       {
-        "cveId": "CVE-2021-2451"
+        "cveId": "CVE-2023-51157"
       },
       {
-        "cveId": "CVE-2021-2452"
+        "cveId": "CVE-2024-20350"
       },
       {
-        "cveId": "CVE-2021-2453"
+        "cveId": "CVE-2024-20455"
       },
       {
-        "cveId": "CVE-2021-2454"
-      },
-      {
-        "cveId": "CVE-2021-2455"
-      },
-      {
-        "cveId": "CVE-2021-2456"
-      },
-      {
-        "cveId": "CVE-2021-2457"
-      },
-      {
-        "cveId": "CVE-2021-2458"
-      },
-      {
-        "cveId": "CVE-2021-2460"
-      },
-      {
-        "cveId": "CVE-2021-2461"
-      },
-      {
-        "cveId": "CVE-2021-2462"
-      },
-      {
-        "cveId": "CVE-2021-2463"
-      },
-      {
-        "cveId": "CVE-2021-2464"
-      },
-      {
-        "cveId": "CVE-2021-2471"
-      },
-      {
-        "cveId": "CVE-2021-2474"
-      },
-      {
-        "cveId": "CVE-2021-2475"
-      },
-      {
-        "cveId": "CVE-2021-2476"
-      },
-      {
-        "cveId": "CVE-2021-2477"
-      },
-      {
-        "cveId": "CVE-2021-2478"
-      },
-      {
-        "cveId": "CVE-2021-2479"
-      },
-      {
-        "cveId": "CVE-2021-2480"
-      },
-      {
-        "cveId": "CVE-2021-2481"
-      },
-      {
-        "cveId": "CVE-2021-2482"
-      },
-      {
-        "cveId": "CVE-2021-2483"
-      },
-      {
-        "cveId": "CVE-2021-2484"
-      },
-      {
-        "cveId": "CVE-2021-2485"
-      },
-      {
-        "cveId": "CVE-2021-35536"
-      },
-      {
-        "cveId": "CVE-2021-35537"
-      },
-      {
-        "cveId": "CVE-2021-35538"
-      },
-      {
-        "cveId": "CVE-2021-35539"
-      },
-      {
-        "cveId": "CVE-2021-35540"
-      },
-      {
-        "cveId": "CVE-2021-35541"
-      },
-      {
-        "cveId": "CVE-2021-35542"
-      },
-      {
-        "cveId": "CVE-2021-35543"
-      },
-      {
-        "cveId": "CVE-2021-35545"
-      },
-      {
-        "cveId": "CVE-2021-35546"
-      },
-      {
-        "cveId": "CVE-2021-35549"
-      },
-      {
-        "cveId": "CVE-2021-35551"
-      },
-      {
-        "cveId": "CVE-2021-35552"
-      },
-      {
-        "cveId": "CVE-2021-35553"
-      },
-      {
-        "cveId": "CVE-2021-35554"
-      },
-      {
-        "cveId": "CVE-2021-35557"
-      },
-      {
-        "cveId": "CVE-2021-35558"
-      },
-      {
-        "cveId": "CVE-2021-35561"
-      },
-      {
-        "cveId": "CVE-2021-35562"
-      },
-      {
-        "cveId": "CVE-2021-35563"
-      },
-      {
-        "cveId": "CVE-2021-35576"
-      },
-      {
-        "cveId": "CVE-2021-35617"
-      },
-      {
-        "cveId": "CVE-2023-39643"
-      },
-      {
-        "cveId": "CVE-2023-40957"
-      },
-      {
-        "cveId": "CVE-2023-40958"
-      },
-      {
-        "cveId": "CVE-2023-41011"
-      },
-      {
-        "cveId": "CVE-2023-4669"
+        "cveId": "CVE-2024-46655"
       }
     ],
     "unknown": []
