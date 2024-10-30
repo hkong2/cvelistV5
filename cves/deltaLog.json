@@ -1,17 +1,24 @@
 [
   {
-    "fetchTime": "2024-10-30T08:01:52.005Z",
-    "durationInMsecs": 5321,
-    "numberOfChanges": 2,
+    "fetchTime": "2024-10-30T08:33:36.011Z",
+    "durationInMsecs": 10237,
+    "numberOfChanges": 4,
     "new": [
       {
-        "cveId": "CVE-2024-50508"
+        "cveId": "CVE-2024-50504"
       },
       {
-        "cveId": "CVE-2024-50510"
+        "cveId": "CVE-2024-50506"
       }
     ],
-    "updated": [],
+    "updated": [
+      {
+        "cveId": "CVE-2024-9632"
+      },
+      {
+        "cveId": "CVE-2024-9676"
+      }
+    ],
     "unknown": []
   }
 ]
