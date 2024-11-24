@@ -1,18 +1,19 @@
 [
   {
-    "fetchTime": "2024-11-24T23:10:47.598Z",
-    "durationInMsecs": 9437,
+    "fetchTime": "2024-11-24T23:28:52.808Z",
+    "durationInMsecs": 12186,
     "numberOfChanges": 3,
-    "new": [],
+    "new": [
+      {
+        "cveId": "CVE-2024-53916"
+      }
+    ],
     "updated": [
       {
-        "cveId": "CVE-2024-8775"
+        "cveId": "CVE-2024-11665"
       },
       {
-        "cveId": "CVE-2024-9355"
-      },
-      {
-        "cveId": "CVE-2024-9902"
+        "cveId": "CVE-2024-11666"
       }
     ],
     "unknown": []
