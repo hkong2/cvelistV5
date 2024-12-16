@@ -1,9 +1,17 @@
 [
   {
-    "fetchTime": "2024-12-16T17:17:09.698Z",
-    "durationInMsecs": 9663,
-    "numberOfChanges": 17,
+    "fetchTime": "2024-12-16T17:33:15.329Z",
+    "durationInMsecs": 9190,
+    "numberOfChanges": 11,
     "new": [
+      {
+        "cveId": "CVE-2024-12658"
+      },
+      {
+        "cveId": "CVE-2024-12659"
+      }
+    ],
+    "updated": [
       {
         "cveId": "CVE-2024-10095"
       },
@@ -17,45 +25,19 @@
         "cveId": "CVE-2024-12657"
       },
       {
+        "cveId": "CVE-2024-20767"
+      },
+      {
+        "cveId": "CVE-2024-35250"
+      },
+      {
         "cveId": "CVE-2024-4762"
       },
       {
+        "cveId": "CVE-2024-55956"
+      },
+      {
         "cveId": "CVE-2024-6001"
-      },
-      {
-        "cveId": "CVE-2024-6002"
-      },
-      {
-        "cveId": "CVE-2024-8058"
-      }
-    ],
-    "updated": [
-      {
-        "cveId": "CVE-2023-29476"
-      },
-      {
-        "cveId": "CVE-2024-11834"
-      },
-      {
-        "cveId": "CVE-2024-31891"
-      },
-      {
-        "cveId": "CVE-2024-31892"
-      },
-      {
-        "cveId": "CVE-2024-55636"
-      },
-      {
-        "cveId": "CVE-2024-55637"
-      },
-      {
-        "cveId": "CVE-2024-55638"
-      },
-      {
-        "cveId": "CVE-2024-55970"
-      },
-      {
-        "cveId": "CVE-2024-56072"
       }
     ],
     "unknown": []
