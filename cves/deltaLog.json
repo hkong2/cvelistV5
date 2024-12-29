@@ -1,14 +1,24 @@
 [
   {
-    "fetchTime": "2024-12-29T06:21:47.966Z",
-    "durationInMsecs": 9996,
-    "numberOfChanges": 1,
+    "fetchTime": "2024-12-29T06:40:35.396Z",
+    "durationInMsecs": 9536,
+    "numberOfChanges": 4,
     "new": [
+      {
+        "cveId": "CVE-2024-13004"
+      },
+      {
+        "cveId": "CVE-2024-56737"
+      },
+      {
+        "cveId": "CVE-2024-56738"
+      }
+    ],
+    "updated": [
       {
         "cveId": "CVE-2018-25107"
       }
     ],
-    "updated": [],
     "unknown": []
   }
 ]
