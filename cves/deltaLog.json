@@ -1,14 +1,24 @@
 [
   {
-    "fetchTime": "2025-03-03T21:24:35.637Z",
-    "durationInMsecs": 13188,
-    "numberOfChanges": 1,
+    "fetchTime": "2025-03-03T21:37:20.000Z",
+    "durationInMsecs": 10799,
+    "numberOfChanges": 4,
     "new": [
       {
-        "cveId": "CVE-2025-1882"
+        "cveId": "CVE-2024-55064"
       }
     ],
-    "updated": [],
+    "updated": [
+      {
+        "cveId": "CVE-2025-1817"
+      },
+      {
+        "cveId": "CVE-2025-1830"
+      },
+      {
+        "cveId": "CVE-2025-1842"
+      }
+    ],
     "unknown": []
   }
 ]
