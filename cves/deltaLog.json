@@ -1,40 +1,43 @@
 [
   {
-    "fetchTime": "2025-03-28T20:21:22.074Z",
-    "durationInMsecs": 12982,
-    "numberOfChanges": 10,
+    "fetchTime": "2025-03-28T20:36:27.271Z",
+    "durationInMsecs": 12499,
+    "numberOfChanges": 11,
     "new": [
+      {
+        "cveId": "CVE-2024-24292"
+      },
+      {
+        "cveId": "CVE-2024-38985"
+      },
+      {
+        "cveId": "CVE-2024-38988"
+      },
+      {
+        "cveId": "CVE-2024-57083"
+      },
+      {
+        "cveId": "CVE-2024-6875"
+      },
+      {
+        "cveId": "CVE-2025-22953"
+      },
+      {
+        "cveId": "CVE-2025-28254"
+      },
+      {
+        "cveId": "CVE-2025-2927"
+      }
+    ],
+    "updated": [
+      {
+        "cveId": "CVE-2024-3918"
+      },
       {
         "cveId": "CVE-2025-2925"
       },
       {
         "cveId": "CVE-2025-2926"
-      }
-    ],
-    "updated": [
-      {
-        "cveId": "CVE-2024-11993"
-      },
-      {
-        "cveId": "CVE-2024-21050"
-      },
-      {
-        "cveId": "CVE-2024-22344"
-      },
-      {
-        "cveId": "CVE-2024-4950"
-      },
-      {
-        "cveId": "CVE-2025-2920"
-      },
-      {
-        "cveId": "CVE-2025-2921"
-      },
-      {
-        "cveId": "CVE-2025-31163"
-      },
-      {
-        "cveId": "CVE-2025-31164"
       }
     ],
     "unknown": []
