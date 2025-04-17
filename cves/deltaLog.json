@@ -1,9 +1,23 @@
 [
   {
-    "fetchTime": "2025-04-16T23:20:57.211Z",
-    "durationInMsecs": 12286,
-    "numberOfChanges": 5,
+    "fetchTime": "2025-04-17T01:06:07.212Z",
+    "durationInMsecs": 13688,
+    "numberOfChanges": 8,
     "new": [
+      {
+        "cveId": "CVE-2025-1290"
+      },
+      {
+        "cveId": "CVE-2025-43708"
+      }
+    ],
+    "updated": [
+      {
+        "cveId": "CVE-2024-11614"
+      },
+      {
+        "cveId": "CVE-2025-1122"
+      },
       {
         "cveId": "CVE-2025-1566"
       },
@@ -15,11 +29,6 @@
       },
       {
         "cveId": "CVE-2025-2073"
-      }
-    ],
-    "updated": [
-      {
-        "cveId": "CVE-2025-43704"
       }
     ],
     "unknown": []
