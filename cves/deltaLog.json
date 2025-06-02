@@ -1,9 +1,20 @@
 [
   {
-    "fetchTime": "2025-06-02T17:17:27.411Z",
-    "durationInMsecs": 15257,
-    "numberOfChanges": 20,
+    "fetchTime": "2025-06-02T17:37:22.826Z",
+    "durationInMsecs": 17105,
+    "numberOfChanges": 6,
     "new": [
+      {
+        "cveId": "CVE-2025-23104"
+      },
+      {
+        "cveId": "CVE-2025-27956"
+      }
+    ],
+    "updated": [
+      {
+        "cveId": "CVE-2024-52615"
+      },
       {
         "cveId": "CVE-2025-20297"
       },
@@ -11,60 +22,7 @@
         "cveId": "CVE-2025-20298"
       },
       {
-        "cveId": "CVE-2025-45387"
-      }
-    ],
-    "updated": [
-      {
-        "cveId": "CVE-2024-1440"
-      },
-      {
-        "cveId": "CVE-2024-3509"
-      },
-      {
-        "cveId": "CVE-2024-48877"
-      },
-      {
-        "cveId": "CVE-2024-52035"
-      },
-      {
-        "cveId": "CVE-2024-54028"
-      },
-      {
-        "cveId": "CVE-2024-7073"
-      },
-      {
-        "cveId": "CVE-2024-7074"
-      },
-      {
-        "cveId": "CVE-2024-8008"
-      },
-      {
-        "cveId": "CVE-2025-1235"
-      },
-      {
-        "cveId": "CVE-2025-20001"
-      },
-      {
-        "cveId": "CVE-2025-23247"
-      },
-      {
-        "cveId": "CVE-2025-49112"
-      },
-      {
-        "cveId": "CVE-2025-49113"
-      },
-      {
         "cveId": "CVE-2025-5036"
-      },
-      {
-        "cveId": "CVE-2025-5436"
-      },
-      {
-        "cveId": "CVE-2025-5437"
-      },
-      {
-        "cveId": "CVE-2025-5442"
       }
     ],
     "unknown": []
