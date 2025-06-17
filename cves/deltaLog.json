@@ -1,14 +1,24 @@
 [
   {
-    "fetchTime": "2025-06-17T09:00:44.813Z",
-    "durationInMsecs": 28314,
-    "numberOfChanges": 1,
+    "fetchTime": "2025-06-17T09:30:59.368Z",
+    "durationInMsecs": 13313,
+    "numberOfChanges": 4,
     "new": [
       {
-        "cveId": "CVE-2025-40674"
+        "cveId": "CVE-2025-3515"
       }
     ],
-    "updated": [],
+    "updated": [
+      {
+        "cveId": "CVE-2025-32920"
+      },
+      {
+        "cveId": "CVE-2025-48797"
+      },
+      {
+        "cveId": "CVE-2025-48798"
+      }
+    ],
     "unknown": []
   }
 ]
