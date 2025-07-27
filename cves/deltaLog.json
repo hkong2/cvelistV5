@@ -1,14 +1,21 @@
 [
   {
-    "fetchTime": "2025-07-27T09:30:14.263Z",
-    "durationInMsecs": 10548,
-    "numberOfChanges": 1,
+    "fetchTime": "2025-07-27T09:46:49.496Z",
+    "durationInMsecs": 12940,
+    "numberOfChanges": 3,
     "new": [
       {
-        "cveId": "CVE-2025-8227"
+        "cveId": "CVE-2025-8228"
       }
     ],
-    "updated": [],
+    "updated": [
+      {
+        "cveId": "CVE-2025-8133"
+      },
+      {
+        "cveId": "CVE-2025-8220"
+      }
+    ],
     "unknown": []
   }
 ]
