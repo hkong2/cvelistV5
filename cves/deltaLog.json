@@ -1,21 +1,22 @@
 [
   {
-    "fetchTime": "2025-08-20T19:31:44.018Z",
-    "durationInMsecs": 12069,
+    "fetchTime": "2025-08-20T19:42:07.258Z",
+    "durationInMsecs": 19880,
     "numberOfChanges": 4,
-    "new": [],
+    "new": [
+      {
+        "cveId": "CVE-2024-57154"
+      },
+      {
+        "cveId": "CVE-2025-9241"
+      },
+      {
+        "cveId": "CVE-2025-9244"
+      }
+    ],
     "updated": [
       {
-        "cveId": "CVE-2009-10005"
-      },
-      {
-        "cveId": "CVE-2011-10027"
-      },
-      {
-        "cveId": "CVE-2025-53013"
-      },
-      {
-        "cveId": "CVE-2025-5115"
+        "cveId": "CVE-2025-55164"
       }
     ],
     "unknown": []
