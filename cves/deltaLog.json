@@ -1,18 +1,19 @@
 [
   {
-    "fetchTime": "2025-08-21T19:09:25.762Z",
-    "durationInMsecs": 22387,
+    "fetchTime": "2025-08-21T19:25:46.139Z",
+    "durationInMsecs": 19122,
     "numberOfChanges": 3,
-    "new": [],
+    "new": [
+      {
+        "cveId": "CVE-2025-55103"
+      }
+    ],
     "updated": [
       {
-        "cveId": "CVE-2024-50641"
+        "cveId": "CVE-2025-55522"
       },
       {
-        "cveId": "CVE-2025-38742"
-      },
-      {
-        "cveId": "CVE-2025-38743"
+        "cveId": "CVE-2025-55523"
       }
     ],
     "unknown": []
