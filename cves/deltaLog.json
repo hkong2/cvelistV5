@@ -1,14 +1,21 @@
 [
   {
-    "fetchTime": "2025-09-01T08:20:40.256Z",
-    "durationInMsecs": 24070,
-    "numberOfChanges": 1,
+    "fetchTime": "2025-09-01T08:45:43.372Z",
+    "durationInMsecs": 34229,
+    "numberOfChanges": 3,
     "new": [
       {
-        "cveId": "CVE-2025-9769"
+        "cveId": "CVE-2025-9770"
       }
     ],
-    "updated": [],
+    "updated": [
+      {
+        "cveId": "CVE-2024-5535"
+      },
+      {
+        "cveId": "CVE-2024-9143"
+      }
+    ],
     "unknown": []
   }
 ]
