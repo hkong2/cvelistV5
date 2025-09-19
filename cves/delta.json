@@ -1,8 +1,15 @@
 {
-  "fetchTime": "2025-09-19T17:42:12.959Z",
-  "durationInMsecs": 16645,
-  "numberOfChanges": 2,
+  "fetchTime": "2025-09-19T17:52:01.208Z",
+  "durationInMsecs": 19100,
+  "numberOfChanges": 3,
   "new": [
+    {
+      "cveId": "CVE-2025-48703",
+      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2025-48703",
+      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2025/48xxx/CVE-2025-48703.json"
+    }
+  ],
+  "updated": [
     {
       "cveId": "CVE-2025-10721",
       "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2025-10721",
@@ -14,6 +21,5 @@
       "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2025/10xxx/CVE-2025-10722.json"
     }
   ],
-  "updated": [],
   "unknown": []
 }
