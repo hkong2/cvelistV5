@@ -1,14 +1,20 @@
 {
-  "fetchTime": "2025-10-02T18:59:05.080Z",
-  "durationInMsecs": 29721,
-  "numberOfChanges": 1,
+  "fetchTime": "2025-10-02T19:18:10.034Z",
+  "durationInMsecs": 27747,
+  "numberOfChanges": 2,
   "new": [
+    {
+      "cveId": "CVE-2025-59835",
+      "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2025-59835",
+      "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2025/59xxx/CVE-2025-59835.json"
+    }
+  ],
+  "updated": [
     {
       "cveId": "CVE-2025-32942",
       "cveOrgLink": "https://cveawg.mitre.org/api/cve/CVE-2025-32942",
       "githubLink": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2025/32xxx/CVE-2025-32942.json"
     }
   ],
-  "updated": [],
   "unknown": []
 }
