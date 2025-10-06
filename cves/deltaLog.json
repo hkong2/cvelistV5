@@ -1,14 +1,21 @@
 [
   {
-    "fetchTime": "2025-10-06T10:40:54.706Z",
-    "durationInMsecs": 30409,
-    "numberOfChanges": 1,
+    "fetchTime": "2025-10-06T11:22:14.099Z",
+    "durationInMsecs": 22393,
+    "numberOfChanges": 3,
     "new": [
       {
-        "cveId": "CVE-2025-11332"
+        "cveId": "CVE-2025-11333"
       }
     ],
-    "updated": [],
+    "updated": [
+      {
+        "cveId": "CVE-2025-10728"
+      },
+      {
+        "cveId": "CVE-2025-10729"
+      }
+    ],
     "unknown": []
   }
 ]
