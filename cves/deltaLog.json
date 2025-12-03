@@ -1,85 +1,67 @@
 [
   {
-    "fetchTime": "2025-12-03T16:30:50.297Z",
-    "durationInMsecs": 27677,
-    "numberOfChanges": 26,
+    "fetchTime": "2025-12-03T16:56:28.419Z",
+    "durationInMsecs": 32688,
+    "numberOfChanges": 20,
     "new": [
       {
+        "cveId": "CVE-2024-32642"
+      },
+      {
+        "cveId": "CVE-2024-32643"
+      },
+      {
+        "cveId": "CVE-2025-13492"
+      },
+      {
+        "cveId": "CVE-2025-34319"
+      },
+      {
+        "cveId": "CVE-2025-65842"
+      },
+      {
+        "cveId": "CVE-2025-65843"
+      }
+    ],
+    "updated": [
+      {
         "cveId": "CVE-2024-32641"
+      },
+      {
+        "cveId": "CVE-2025-10230"
+      },
+      {
+        "cveId": "CVE-2025-12185"
       },
       {
         "cveId": "CVE-2025-13751"
       },
       {
+        "cveId": "CVE-2025-30190"
+      },
+      {
         "cveId": "CVE-2025-55076"
+      },
+      {
+        "cveId": "CVE-2025-55182"
+      },
+      {
+        "cveId": "CVE-2025-59890"
       },
       {
         "cveId": "CVE-2025-62686"
       },
       {
-        "cveId": "CVE-2025-65320"
+        "cveId": "CVE-2025-65238"
+      },
+      {
+        "cveId": "CVE-2025-65622"
       },
       {
         "cveId": "CVE-2025-66431"
-      }
-    ],
-    "updated": [
-      {
-        "cveId": "CVE-2020-36421"
       },
       {
-        "cveId": "CVE-2024-32640"
-      },
-      {
-        "cveId": "CVE-2025-11461"
-      },
-      {
-        "cveId": "CVE-2025-12758"
-      },
-      {
-        "cveId": "CVE-2025-13762"
-      },
-      {
-        "cveId": "CVE-2025-13945"
-      },
-      {
-        "cveId": "CVE-2025-45311"
-      },
-      {
-        "cveId": "CVE-2025-57198"
-      },
-      {
-        "cveId": "CVE-2025-57199"
-      },
-      {
-        "cveId": "CVE-2025-57201"
-      },
-      {
-        "cveId": "CVE-2025-57202"
-      },
-      {
-        "cveId": "CVE-2025-59694"
-      },
-      {
-        "cveId": "CVE-2025-59698"
-      },
-      {
-        "cveId": "CVE-2025-64126"
-      },
-      {
-        "cveId": "CVE-2025-65235"
-      },
-      {
-        "cveId": "CVE-2025-66255"
-      },
-      {
-        "cveId": "CVE-2025-66256"
-      },
-      {
-        "cveId": "CVE-2025-66372"
-      },
-      {
-        "cveId": "CVE-2025-66382"
+        "cveId": "CVE-2025-7044"
       },
       {
         "cveId": "CVE-2025-7195"
