@@ -1,73 +1,79 @@
 [
   {
-    "fetchTime": "2026-01-13T13:59:16.781Z",
-    "durationInMsecs": 19293,
-    "numberOfChanges": 21,
+    "fetchTime": "2026-01-13T14:33:04.559Z",
+    "durationInMsecs": 40657,
+    "numberOfChanges": 23,
     "new": [
       {
+        "cveId": "CVE-2025-11669"
+      },
+      {
+        "cveId": "CVE-2025-13444"
+      },
+      {
+        "cveId": "CVE-2025-13447"
+      }
+    ],
+    "updated": [
+      {
         "cveId": "CVE-2025-11250"
+      },
+      {
+        "cveId": "CVE-2025-13774"
       },
       {
         "cveId": "CVE-2025-14507"
       },
       {
+        "cveId": "CVE-2025-14523"
+      },
+      {
+        "cveId": "CVE-2025-15514"
+      },
+      {
+        "cveId": "CVE-2025-20765"
+      },
+      {
+        "cveId": "CVE-2025-41717"
+      },
+      {
+        "cveId": "CVE-2025-59022"
+      },
+      {
+        "cveId": "CVE-2025-61546"
+      },
+      {
+        "cveId": "CVE-2025-66176"
+      },
+      {
+        "cveId": "CVE-2025-66177"
+      },
+      {
+        "cveId": "CVE-2025-69355"
+      },
+      {
+        "cveId": "CVE-2025-69356"
+      },
+      {
+        "cveId": "CVE-2025-69359"
+      },
+      {
+        "cveId": "CVE-2025-69361"
+      },
+      {
         "cveId": "CVE-2025-9427"
+      },
+      {
+        "cveId": "CVE-2025-9435"
       },
       {
         "cveId": "CVE-2026-0684"
       },
       {
-        "cveId": "CVE-2026-0877"
-      },
-      {
-        "cveId": "CVE-2026-0878"
-      },
-      {
-        "cveId": "CVE-2026-0879"
-      },
-      {
-        "cveId": "CVE-2026-0880"
-      },
-      {
-        "cveId": "CVE-2026-0881"
-      },
-      {
-        "cveId": "CVE-2026-0882"
-      },
-      {
-        "cveId": "CVE-2026-0883"
-      },
-      {
-        "cveId": "CVE-2026-0884"
-      },
-      {
-        "cveId": "CVE-2026-0885"
-      },
-      {
-        "cveId": "CVE-2026-0886"
-      },
-      {
-        "cveId": "CVE-2026-0887"
-      },
-      {
-        "cveId": "CVE-2026-0888"
-      },
-      {
-        "cveId": "CVE-2026-0889"
-      },
-      {
-        "cveId": "CVE-2026-0890"
-      },
-      {
-        "cveId": "CVE-2026-0891"
+        "cveId": "CVE-2026-0859"
       },
       {
         "cveId": "CVE-2026-0892"
-      }
-    ],
-    "updated": [
-      {
-        "cveId": "CVE-2025-14327"
       }
     ],
     "unknown": []
