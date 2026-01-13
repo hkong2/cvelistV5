@@ -1,9 +1,23 @@
 [
   {
-    "fetchTime": "2026-01-13T21:13:31.934Z",
-    "durationInMsecs": 22089,
-    "numberOfChanges": 7,
+    "fetchTime": "2026-01-13T21:35:56.894Z",
+    "durationInMsecs": 48435,
+    "numberOfChanges": 13,
     "new": [
+      {
+        "cveId": "CVE-2025-68658"
+      },
+      {
+        "cveId": "CVE-2025-68947"
+      }
+    ],
+    "updated": [
+      {
+        "cveId": "CVE-2025-15056"
+      },
+      {
+        "cveId": "CVE-2025-56558"
+      },
       {
         "cveId": "CVE-2026-0528"
       },
@@ -15,17 +29,21 @@
       },
       {
         "cveId": "CVE-2026-0543"
-      }
-    ],
-    "updated": [
-      {
-        "cveId": "CVE-2025-37176"
       },
       {
-        "cveId": "CVE-2025-37177"
+        "cveId": "CVE-2026-21298"
       },
       {
-        "cveId": "CVE-2026-0889"
+        "cveId": "CVE-2026-21307"
+      },
+      {
+        "cveId": "CVE-2026-22755"
+      },
+      {
+        "cveId": "CVE-2026-22870"
+      },
+      {
+        "cveId": "CVE-2026-22871"
       }
     ],
     "unknown": []
