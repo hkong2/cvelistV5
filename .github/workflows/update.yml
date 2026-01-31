@@ -1,7 +1,7 @@
 # Github Action to update this repository using CVE REST Services
 # Note that this script was refactored with help from google gemini 3 pro
 
-name: CVE Update
+name: CVE List V5 Updater
 on:
   # run every 5~10 minutes (min Github scheduling allowed)
   # note this may not complete when the hourly "CVE Release" workflow starts,
@@ -95,6 +95,6 @@ jobs:
       - name: output
         uses: actions/github-script@v7
         if: always() # Run this even if the commit step failed
-      #   with:
-      #     script: |
-      #         core.notice("this is a notice")
+        with:
+          script: |
+              core.notice("this is a notice")
