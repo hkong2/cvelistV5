@@ -1,7 +1,7 @@
 # Github Action to update this repository using CVE REST Services
 # Note that this script was refactored with help from google gemini 3 pro
 
-name: CVE List V5 Updater
+name: CVE Update
 on:
   # run every 5~10 minutes (min Github scheduling allowed)
   # note this may not complete when the hourly "CVE Release" workflow starts,
@@ -87,7 +87,7 @@ jobs:
           node ./.github/workflows/dist/index.js update "$UPDATE_PARAMS" --start=$PREV_UPDATE
           
           # 5. get commit message
-          RAW_STATUS=$(git log -1 --pretty=%B)
+          COMMIT_MSG=$(git log -1 --pretty=%B)
           
           # 6. push changes
           git push
@@ -97,4 +97,4 @@ jobs:
         if: always() # Run this even if the commit step failed
         with:
           script: |
-              core.notice("this is a notice")
+              core.notice(`${COMMIT_MSG}`)
