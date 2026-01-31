@@ -88,6 +88,8 @@ jobs:
           
           # 5. get commit message
           COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "$COMMIT_MSG" > commit_message.txt
+          cat commit_message.txt
           
           # 6. push changes
           git push
@@ -97,4 +99,13 @@ jobs:
         if: always() # Run this even if the commit step failed
         with:
           script: |
-              core.notice(`${process.env.COMMIT_MSG}`)
+            const fs = require('fs');
+            try {
+              // Read the file content (ensure the path is correct relative to the root)
+              const content = fs.readFileSync('commit_message.txt', 'utf8');
+              
+              // Log it as a Notice in the GitHub Actions UI
+              core.notice(`${content}`);
+            } catch (err) {
+              core.setFailed(`Failed to read file: ${err.message}`);
+            }
