@@ -97,4 +97,4 @@ jobs:
         if: always() # Run this even if the commit step failed
         with:
           script: |
-              core.notice(`${COMMIT_MSG}`)
+              core.notice(`${process.env.COMMIT_MSG}`)
