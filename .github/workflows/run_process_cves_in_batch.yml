@@ -17,11 +17,14 @@ on:
   # Enables manual runs of this workflow from the Actions tab
   workflow_dispatch:
     inputs:
-      params:
-        description: 'command line arguments to update'
-        required: false
-        default: ''
-
+      mode:
+        description: 'Select "init" to rebuild the master list, or "batch" to process CVEs'
+        required: true
+        default: 'batch'
+        type: choice
+        options:
+          - batch
+          - init
 # limits the operations this script can do
 permissions:
   contents: write
@@ -63,18 +66,24 @@ jobs:
         with:
           node-version: 20
 
+      # note that when this is running, the pwd is the home direcctory of the repository
       - name: Run Update Script
         run: |
           pwd
-          ./process_cves.sh ../../cves
-
+          if [ "${{ github.event.inputs.mode }}" == "init" ]; then
+            echo "Running Initialization..."
+            # Running the script from the workflow directory against the ./cves folder
+            "$GITHUB_WORKSPACE/.github/workflows/build_cve_fullpath_listing.sh" ./cves
+          else
+            $GITHUB_WORKSPACE/.github/workflows/process_cves.sh ./cves
+          fi
       - name: Commit and Push Changes
         run: |
           # Configure git
           git config user.name "GitHub Action Bot"
           git config user.email "actions@github.com"
           
-          # Stage the JSON files and the state file (.last_processed_cve)
+          # Stage the JSON files
           git add .
           
           # Check if there are changes to commit
