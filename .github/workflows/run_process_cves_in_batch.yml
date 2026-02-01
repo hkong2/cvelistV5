@@ -65,6 +65,7 @@ jobs:
 
       - name: Run Update Script
         run: |
+          pwd
           ./process_cves.sh ../../cves
 
       - name: Commit and Push Changes
