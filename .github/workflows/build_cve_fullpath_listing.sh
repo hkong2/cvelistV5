@@ -14,7 +14,7 @@ SEARCH_DIR="${1:-.}"
 # 2. Resolve the absolute path
 # 3. Sort them alphabetically by the full path
 # 4. output to all_cve_files.json
-find "$SEARCH_DIR" -type f -name "CVE-*-*.json" -exec readlink -f {} + \
+find "$SEARCH_DIR" -type f -name "CVE-*-*.json" \
   | sort \
   | jq -R -s \
     --arg ts "$TIMESTAMP" \
