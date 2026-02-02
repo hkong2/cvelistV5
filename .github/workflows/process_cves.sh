@@ -2,7 +2,7 @@
 
 # --- CONFIGURATION ---
 MASTER_LIST="all_cve_files.json"
-BATCH_SIZE=2
+BATCH_SIZE=5000
 
 # Fallback for local testing/GitHub Summary
 SUM_OUT="${GITHUB_STEP_SUMMARY:-/dev/stdout}"
