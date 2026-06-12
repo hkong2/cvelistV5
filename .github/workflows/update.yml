@@ -55,10 +55,10 @@ jobs:
         run: |
           export TEMP_TIMESTAMP=$(date '+%Y-%m-%d_%H%M_UTC')
           echo "out=$TEMP_TIMESTAMP" >> $GITHUB_OUTPUT
-          git pull --ff-only --no-tags
           git config --global user.email "github_action@example.com"
           git config --global user.name "cvelistV5 Github Action"
           git remote set-url origin https://${GITHUB_TOKEN}@github.com/${{github.repository}}.git
+          git pull --ff-only --no-tags
           export PREV_TS=$(jq -c -r .[2].fetchTime < $CVES_BASE_DIRECTORY/deltaLog.json)
           node ./.github/workflows/dist/index.js update ${{ github.event.inputs.params }} --start=$PREV_TS
           git push
