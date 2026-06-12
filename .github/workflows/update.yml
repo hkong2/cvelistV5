@@ -46,6 +46,7 @@ jobs:
         with:
           fetch-depth: 1
           fetch-tags: false
+          persist-credentials: false
       - name: Setup Node to specific version
         uses: actions/setup-node@v6
         with:
@@ -54,7 +55,7 @@ jobs:
         run: |
           export TEMP_TIMESTAMP=$(date '+%Y-%m-%d_%H%M_UTC')
           echo "out=$TEMP_TIMESTAMP" >> $GITHUB_OUTPUT
-          git pull
+          git pull --ff-only --no-tags
           git config --global user.email "github_action@example.com"
           git config --global user.name "cvelistV5 Github Action"
           git remote set-url origin https://${GITHUB_TOKEN}@github.com/${{github.repository}}.git
