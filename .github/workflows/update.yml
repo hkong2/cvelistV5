@@ -52,6 +52,8 @@ jobs:
         with:
           node-version: 24
       - name: Update CVEs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           export TEMP_TIMESTAMP=$(date '+%Y-%m-%d_%H%M_UTC')
           echo "out=$TEMP_TIMESTAMP" >> $GITHUB_OUTPUT
